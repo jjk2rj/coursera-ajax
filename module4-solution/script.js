@@ -34,8 +34,24 @@ WARNING!!! WARNING!!!
 // See Lecture 52, part 2
 // (Note, Step 2 will be done in the SpeakHello.js file.)
 (function(window){
+
   var names = ["Yaakov", "John", "Jen", "Jason", "Paul", "Frank", "Larry", "Paula", "Laura", "Jim"];
 
+  // Harder portion
+  for(var i = 0; i < names.length; i++){
+    
+    var firstLetter = names[i].charAt(0).toLowerCase();
+    
+    if(firstLetter == "j")
+    {
+      byeSpeaker.speak(names[i]);
+    } 
+    else{
+      helloSpeaker.speak(names[i]);
+    }
+  }
+
+  // use the map function to create an array based on the names array
   var mapFunc = function (name){
     var firstLetter = name.charAt(0).toLowerCase();
       
@@ -47,22 +63,34 @@ WARNING!!! WARNING!!!
         console.log(helloSpeaker.speakSimple(name));
       }
   };
-  for(var i = 0; i < names.length; i++){
-    
-    var firstLetter = names[i].charAt(0).toLowerCase();;
-    
+  var new_array = names.map(mapFunc);
+
+  // Code using the reduce function
+  var arrays = {hello: [], goodbye: []};
+  var myObject = names.reduce(function (accumulator, currentValue) {
+    var firstLetter = currentValue.charAt(0).toLowerCase();
+    // console.log(firstLetter);
     if(firstLetter == "j")
     {
-      byeSpeaker.speak(names[i]);
+      arrays.goodbye.push(byeSpeaker.speakSimple(currentValue));
     } 
     else{
-      helloSpeaker.speak(names[i]);
+      arrays.hello.push(helloSpeaker.speakSimple(currentValue));
     }
+    return accumulator
+  }, arrays);
+  
+  // console.log(myObject);
+
+  // print values in the Hello array of the object
+  for(var j = 0; j < myObject.hello.length; j++){
+    console.log(myObject.hello[j]);
+  }
+  // print values in the Goodbye array of the object
+  for(var j = 0; j < myObject.goodbye.length; j++){
+    console.log(myObject.goodbye[j]);
   }
 
-  var new_array = names.map(mapFunc);
-  // console.log(new_array);
-  
 })(window);
 
 // STEP 10:
